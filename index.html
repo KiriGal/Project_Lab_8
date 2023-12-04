@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wordle Game</title>
+  <link rel="stylesheet" href="style/main.css">
+</head>
+
+<body>
+  <header>
+    <h1>Wordle Game</h1>
+  </header>
+
+  <div id="wordle-container">
+    <!-- Ячейки для букв будут генерироваться тут -->
+  </div>
+
+  <div class="buttons">
+
+    <input type="text" id="letter-input" maxlength="1" autofocus>
+    <button class="guess" onclick="checkGuess()">Отправить</button>
+
+    <button onclick="generateNewWord()">Новое слово</button>
+  </div>
+
+  <script src="js/script.js" type="text/javascript">
+
+  </script>
+</body>
+
+</html>
