@@ -4,3 +4,6 @@ D:\MyProjects\wordle\wordle\x64\Debug\wordle.vcxproj.GenerateResource.cache
 D:\MyProjects\wordle\Project_Lab_8\wordle\x64\Debug\wordle.vcxproj.AssemblyReference.cache
 D:\MyProjects\wordle\Project_Lab_8\wordle\x64\Debug\wordle.wordle_form.resources
 D:\MyProjects\wordle\Project_Lab_8\wordle\x64\Debug\wordle.vcxproj.GenerateResource.cache
+C:\Users\Кирилл\Desktop\App\wordle\x64\Debug\wordle.vcxproj.AssemblyReference.cache
+C:\Users\Кирилл\Desktop\App\wordle\x64\Debug\wordle.wordle_form.resources
+C:\Users\Кирилл\Desktop\App\wordle\x64\Debug\wordle.vcxproj.GenerateResource.cache
