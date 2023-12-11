@@ -147,8 +147,8 @@ void clearString(int line = 0) {
         }
     }
 
-    form->textStatus->Text = "Несуществующее слово";
-    form->textStatus->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 26);
+    form->textStatus->Text = "Incorrect word";
+    form->textStatus->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 30);
     currentPos -= 7;
 }
 
