@@ -20,6 +20,7 @@ std::map<int, std::string> virtualCodeToLetterMap;
 int currentPos = 0;
 bool flagure;
 bool stopGame = false;
+bool statusResult = false;
 int keyInt = 0;
 std::string trueWord = "œ–»¬≈“—";
 HHOOK keyboardHook;
@@ -171,6 +172,24 @@ std::string getWordForLine(int line = 0) {
     return word;
 }
 
+void endWinGame() {
+    if (keyboardHook != NULL) {
+        UnhookWindowsHookEx(keyboardHook);
+        keyboardHook = NULL;
+    }
+    wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
+    form->textStatus->Text = "Congratulations!";
+}
+
+void endLoseGame() {
+    if (keyboardHook != NULL) {
+        UnhookWindowsHookEx(keyboardHook);
+        keyboardHook = NULL;
+    }
+    wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
+    form->textStatus->Text = "You Loser";
+}
+
 bool isWordExist(int line = 0) {
     std::string word = getWordForLine(line);
     
@@ -180,22 +199,30 @@ bool isWordExist(int line = 0) {
             if (masWords[i][k] != word[k])break;
             indicator++;
         }
-        if (indicator == 7)return true;
+        if (indicator == 7) {
+            return true;
+        }
     }
 
     return false;
+}
+
+bool compareWord(std::string Word, std::string Word1) {
+    for (int k = 0; k < 7; k++) {
+        if (Word[k] != Word1[k])return false;
+    }
+
+    return true;
 }
 
 int checkSymbol(String^ symbol, int position = 0) {
     String^ systemString = convertToSystemString(trueWord);
     if (position == 6) {
         if (!isWordExist(currentPos / 7))clearString(currentPos / 7);
+        if (isWordExist(currentPos / 7) && compareWord(trueWord, getWordForLine(currentPos / 7)))endWinGame();
     }
-    
-    
-    if (systemString[position] == symbol[0] && position == 6) {
-         
-    }
+    if (position == 6 && currentPos/7 == 4)if (isWordExist(currentPos / 7) && compareWord(trueWord, getWordForLine(currentPos/7)))endLoseGame();
+
     if (systemString[position] == symbol[0])return 1;
     for (int i = 0; i < 7; i++) {
         if (systemString[i] == symbol[0])return 2;
@@ -211,15 +238,6 @@ void generateTrueWord() {
         c = toupper(c);
         if (c == 'ˇ')c = 'ﬂ';
     }
-}
-
-void endWinGame() {
-    if (keyboardHook != NULL) {
-        UnhookWindowsHookEx(keyboardHook);
-        keyboardHook = NULL;
-    }
-    wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
-    form->textStatus->Text = "Congratulations!";
 }
 
 bool isRussianAlpha(std::string str) {
