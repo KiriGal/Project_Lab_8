@@ -147,6 +147,8 @@ void clearString(int line = 0) {
         }
     }
 
+    form->textStatus->Text = "Несуществующее слово";
+    form->textStatus->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 26);
     currentPos -= 7;
 }
 
@@ -179,6 +181,7 @@ void endWinGame() {
     }
     wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
     form->textStatus->Text = "Congratulations!";
+    form->textStatus->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 30);
 }
 
 void endLoseGame() {
@@ -188,6 +191,7 @@ void endLoseGame() {
     }
     wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
     form->textStatus->Text = "You Loser";
+    form->textStatus->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 30);
 }
 
 bool isWordExist(int line = 0) {
@@ -261,6 +265,7 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
             wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
             std::string ch = virtualCodeToLetterMap[pKeyboardStruct->vkCode];
             form->textStatus->Text = convertToSystemString(trueWord);
+            form->textStatus->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 30);
             String^ systemString = convertToSystemString(ch);
 
             TextBox^ textBox;
