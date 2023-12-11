@@ -221,7 +221,7 @@ int checkSymbol(String^ symbol, int position = 0) {
         if (!isWordExist(currentPos / 7))clearString(currentPos / 7);
         if (isWordExist(currentPos / 7) && compareWord(trueWord, getWordForLine(currentPos / 7)))endWinGame();
     }
-    if (position == 6 && currentPos/7 == 4)if (isWordExist(currentPos / 7) && compareWord(trueWord, getWordForLine(currentPos/7)))endLoseGame();
+    if (position == 6 && currentPos/7 == 4)if (isWordExist(currentPos / 7) && !compareWord(trueWord, getWordForLine(currentPos/7)))endLoseGame();
 
     if (systemString[position] == symbol[0])return 1;
     for (int i = 0; i < 7; i++) {
