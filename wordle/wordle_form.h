@@ -851,6 +851,7 @@ namespace wordle {
 
 		}
 #pragma endregion
+
 		// кнопка "закрытия"
 	public: System::Void closeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		Application::Exit();
@@ -865,6 +866,7 @@ namespace wordle {
 	}
 		// ********************
 		
+
 		// кнопка "свернуть"
 	public: System::Void collapseBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->WindowState = FormWindowState::Minimized;
@@ -879,6 +881,7 @@ namespace wordle {
 		this->collapseBtn->ForeColor = Color::White;
 	}
 		// ********************
+
 
 		// для перемещения
 	bool drag = false;
