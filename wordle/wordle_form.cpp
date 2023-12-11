@@ -22,10 +22,11 @@ bool flagure;
 bool stopGame = false;
 int keyInt = 0;
 std::string trueWord = "ПРИВЕТС";
+HHOOK keyboardHook;
 
 
 
-void initializeVirtualCodeToLetterMap() {
+std::string initializeVirtualCodeToLetterMap(int numKey = 0) {
     virtualCodeToLetterMap[0x41] = "Ф";
     virtualCodeToLetterMap[0x42] = "И";
     virtualCodeToLetterMap[0x43] = "С";
@@ -58,6 +59,8 @@ void initializeVirtualCodeToLetterMap() {
     virtualCodeToLetterMap[186] = "Ж";
     virtualCodeToLetterMap[221] = "Ъ";
     virtualCodeToLetterMap[219] = "Х";
+
+    return virtualCodeToLetterMap[numKey];
 }
 
 String^ convertToSystemString(const std::string& str) {
@@ -68,6 +71,24 @@ String^ convertToSystemString(const std::string& str) {
     Encoding^ encoding = Encoding::GetEncoding(1251);
     return encoding->GetString(bytes);
 }
+
+void ConvertSystemStringToStdString(String^ s, std::string& os)
+{
+    using namespace Runtime::InteropServices;
+    const char* chars =
+        (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+    os = chars;
+    Marshal::FreeHGlobal(IntPtr((void*)chars));
+}
+
+System::String^ InsertIntoSystemString(System::String^ original, System::String^ toInsert, int position)
+{
+    System::Text::StringBuilder^ builder = gcnew System::Text::StringBuilder(original);
+    builder->Insert(position, toInsert);
+    return builder->ToString();
+}
+
+
 
 void getMasWords() {
     setlocale(LC_ALL, "Russian");
@@ -96,63 +117,90 @@ void clearTextBox(bool flag = false) {
         keyInt = 0;
         wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
         
-        form->box1_forStr7->Text = "";
-        form->box2_forStr7->Text = "";
-        form->box3_forStr7->Text = "";
-        form->box4_forStr7->Text = "";
-        form->box5_forStr7->Text = "";
-        form->box6_forStr7->Text = "";
-        form->box7_forStr7->Text = "";
-
-        form->textBox1->Text = "";
-        form->textBox2->Text = "";
-        form->textBox3->Text = "";
-        form->textBox4->Text = "";
-        form->textBox5->Text = "";
-        form->textBox6->Text = "";
-        form->textBox7->Text = "";
-
-        form->textBox8->Text = "";
-        form->textBox9->Text = "";
-        form->textBox10->Text = "";
-        form->textBox11->Text = "";
-        form->textBox12->Text = "";
-        form->textBox13->Text = "";
-        form->textBox14->Text = "";
-
-        form->textBox15->Text = "";
-        form->textBox16->Text = "";
-        form->textBox17->Text = "";
-        form->textBox18->Text = "";
-        form->textBox19->Text = "";
-        form->textBox20->Text = "";
-        form->textBox21->Text = "";
-        
-        form->textBox22->Text = "";
-        form->textBox23->Text = "";
-        form->textBox24->Text = "";
-        form->textBox25->Text = "";
-        form->textBox26->Text = "";
-        form->textBox27->Text = "";
-        form->textBox28->Text = "";
+        for each (Control ^ control in form->Controls)
+        {
+            TextBox^ textBox = dynamic_cast<TextBox^>(control);
+            if (textBox != nullptr)
+            {
+                textBox->Text = "";
+                textBox->BackColor = Color().Gray;
+            }
+        }
     }
 }
 
+void clearString(int line = 0) {
+    wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
+    int posString = 0;
+
+    for each (Control ^ control in form->Controls)
+    {
+        TextBox^ textBox = dynamic_cast<TextBox^>(control);
+        if (textBox != nullptr)
+        {
+            if (posString/7 == 4 - line) {
+                textBox->Text = "";
+                textBox->BackColor = Color().Gray;
+            }
+            posString += 1;
+        }
+    }
+
+    currentPos -= 7;
+}
+
+std::string getWordForLine(int line = 0) {
+    wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
+    int posString = 0;
+    std::string word = "";
+    std::string exam;
+
+    for each (Control ^ control in form->Controls)
+    {
+        TextBox^ textBox = dynamic_cast<TextBox^>(control);
+        if (textBox != nullptr)
+        {
+            if (posString / 7 == 4 - line) {
+                ConvertSystemStringToStdString(textBox->Text, exam);
+                word.insert(0, exam, 0, 1);
+            }
+            posString += 1;
+        }
+    }
+
+    return word;
+}
+
+bool isWordExist(int line = 0) {
+    std::string word = getWordForLine(line);
+    
+    for (int i = 0; i < 96419; i++) {
+        int indicator = 0;
+        for (int k = 0; k < 7; k++) {
+            if (masWords[i][k] != word[k])break;
+            indicator++;
+        }
+        if (indicator == 7)return true;
+    }
+
+    return false;
+}
+
 int checkSymbol(String^ symbol, int position = 0) {
-    /*if (trueWord[position] == symbol[0] && position == 6) {
-        return 0;
-    }*/
     String^ systemString = convertToSystemString(trueWord);
+    if (position == 6) {
+        if (!isWordExist(currentPos / 7))clearString(currentPos / 7);
+    }
+    
+    
+    if (systemString[position] == symbol[0] && position == 6) {
+         
+    }
     if (systemString[position] == symbol[0])return 1;
     for (int i = 0; i < 7; i++) {
         if (systemString[i] == symbol[0])return 2;
     }
     return 0;
-}
-
-void endWinGame() {
-    wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
-    form->textStatus->Text = "Congratulations!";
 }
 
 void generateTrueWord() {
@@ -165,12 +213,31 @@ void generateTrueWord() {
     }
 }
 
+void endWinGame() {
+    if (keyboardHook != NULL) {
+        UnhookWindowsHookEx(keyboardHook);
+        keyboardHook = NULL;
+    }
+    wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
+    form->textStatus->Text = "Congratulations!";
+}
+
+bool isRussianAlpha(std::string str) {
+    for (char sim : str) {
+        if (static_cast<unsigned char>(sim) >= 192 && static_cast<unsigned char>(sim) <= 255) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 // Глобальный перехватчик клавиатуры
 LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION) {
         KBDLLHOOKSTRUCT* pKeyboardStruct = (KBDLLHOOKSTRUCT*)lParam;
         if (pKeyboardStruct->vkCode == keyInt)flagure = false; else flagure = true;
-        if (flagure && !stopGame) {
+        if (flagure && !stopGame && isRussianAlpha(initializeVirtualCodeToLetterMap(pKeyboardStruct->vkCode))) {
             
             keyInt = pKeyboardStruct->vkCode;
             wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
@@ -178,404 +245,134 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
             form->textStatus->Text = convertToSystemString(trueWord);
             String^ systemString = convertToSystemString(ch);
 
+            TextBox^ textBox;
+
             switch (currentPos) {
                 case 0:
-                    form->box1_forStr7->Text = systemString;
-                    switch (checkSymbol(systemString, 0)) {
-                        case 0:
-                            form->box1_forStr7->BackColor = Color().Gray;
-                            break;
-                        case 1:
-                            form->box1_forStr7->BackColor = Color().Green;
-                            break;
-                        case 2:
-                            form->box1_forStr7->BackColor = Color().Yellow;
-                            break;
-                    }
+                    textBox = form->box1_forStr7;
                     break;
                 case 1:
-                    form->box2_forStr7->Text = systemString;
-                    switch (checkSymbol(systemString, 1)) {
-                    case 0:
-                        form->box2_forStr7->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->box2_forStr7->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->box2_forStr7->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->box2_forStr7;
                     break;
                 case 2:
-                    form->box3_forStr7->Text = systemString;
-                    switch (checkSymbol(systemString, 2)) {
-                    case 0:
-                        form->box3_forStr7->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->box3_forStr7->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->box3_forStr7->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->box3_forStr7;
                     break;
                 case 3:
-                    form->box4_forStr7->Text = systemString;
-                    switch (checkSymbol(systemString, 3)) {
-                    case 0:
-                        form->box4_forStr7->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->box4_forStr7->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->box4_forStr7->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->box4_forStr7;
                     break;
                 case 4:
-                    form->box5_forStr7->Text = systemString;
-                    switch (checkSymbol(systemString, 4)) {
-                    case 0:
-                        form->box5_forStr7->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->box5_forStr7->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->box5_forStr7->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->box5_forStr7;
                     break;
                 case 5:
-                    form->box6_forStr7->Text = systemString;
-                    switch (checkSymbol(systemString, 5)) {
-                    case 0:
-                        form->box6_forStr7->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->box6_forStr7->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->box6_forStr7->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->box6_forStr7;
                     break;
                 case 6:
-                    form->box7_forStr7->Text = systemString;
-                    switch (checkSymbol(systemString, 6)) {
-                    case 0:
-                        form->box7_forStr7->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->box7_forStr7->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->box7_forStr7->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->box7_forStr7;
                     break;
 
                 case 7:
-                    form->textBox7->Text = systemString;
-                    switch (checkSymbol(systemString, 0)) {
-                    case 0:
-                        form->textBox7->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox7->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox7->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox7;
                     break;
                 case 8:
-                    form->textBox6->Text = systemString;
-                    switch (checkSymbol(systemString, 1)) {
-                    case 0:
-                        form->textBox6->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox6->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox6->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox6;
                     break;
                 case 9:
-                    form->textBox5->Text = systemString;
-                    switch (checkSymbol(systemString, 2)) {
-                    case 0:
-                        form->textBox5->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox5->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox5->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox5;
                     break;
                 case 10:
-                    form->textBox4->Text = systemString;
-                    switch (checkSymbol(systemString, 3)) {
-                    case 0:
-                        form->textBox4->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox4->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox4->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox4;
                     break;
                 case 11:
-                    form->textBox3->Text = systemString;
-                    switch (checkSymbol(systemString, 4)) {
-                    case 0:
-                        form->textBox3->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox3->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox3->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox3;
                     break;
                 case 12:
-                    form->textBox2->Text = systemString;
-                    switch (checkSymbol(systemString, 5)) {
-                    case 0:
-                        form->textBox2->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox2->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox2->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox2;
                     break;
                 case 13:
-                    form->textBox1->Text = systemString;
-                    switch (checkSymbol(systemString, 6)) {
-                    case 0:
-                        form->textBox1->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox1->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox1->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox1;
                     break;
 
                 case 14:
-                    form->textBox14->Text = systemString;
-                    switch (checkSymbol(systemString, 0)) {
-                    case 0:
-                        form->textBox14->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox14->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox14->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox14;
                     break;
                 case 15:
-                    form->textBox13->Text = systemString;
-                    switch (checkSymbol(systemString, 1)) {
-                    case 0:
-                        form->textBox13->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox13->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox13->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox13;
                     break;
                 case 16:
-                    form->textBox12->Text = systemString;
-                    switch (checkSymbol(systemString, 2)) {
-                    case 0:
-                        form->textBox12->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox12->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox12->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox12;
                     break;
                 case 17:
-                    form->textBox11->Text = systemString;
-                    switch (checkSymbol(systemString, 3)) {
-                    case 0:
-                        form->textBox11->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox11->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox11->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox11;
                     break;
                 case 18:
-                    form->textBox10->Text = systemString;
-                    switch (checkSymbol(systemString, 4)) {
-                    case 0:
-                        form->textBox10->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox10->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox10->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox10;
                     break;
                 case 19:
-                    form->textBox9->Text = systemString;
-                    switch (checkSymbol(systemString, 5)) {
-                    case 0:
-                        form->textBox9->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox9->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox9->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox9;
                     break;
                 case 20:
-                    form->textBox8->Text = systemString;
-                    switch (checkSymbol(systemString, 6)) {
-                    case 0:
-                        form->textBox8->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox8->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox8->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox8;
                     break;
 
                 case 21:
-                    form->textBox21->Text = systemString;
-                    switch (checkSymbol(systemString, 0)) {
-                    case 0:
-                        form->textBox21->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox21->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox21->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox21;
                     break;
                 case 22:
-                    form->textBox20->Text = systemString;
-                    switch (checkSymbol(systemString, 1)) {
-                    case 0:
-                        form->textBox20->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox20->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox20->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox20;
                     break;
                 case 23:
-                    form->textBox19->Text = systemString;
-                    switch (checkSymbol(systemString, 2)) {
-                    case 0:
-                        form->textBox19->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox19->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox19->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox19;
                     break;
                 case 24:
-                    form->textBox18->Text = systemString;
-                    switch (checkSymbol(systemString, 3)) {
-                    case 0:
-                        form->textBox18->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox18->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox18->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox18;
                     break;
                 case 25:
-                    form->textBox17->Text = systemString;
-                    switch (checkSymbol(systemString, 4)) {
-                    case 0:
-                        form->textBox17->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox17->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox17->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox17;
                     break;
                 case 26:
-                    form->textBox16->Text = systemString;
-                    switch (checkSymbol(systemString, 5)) {
-                    case 0:
-                        form->textBox16->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox16->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox16->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox16;
                     break;
                 case 27:
-                    form->textBox15->Text = systemString;
-                    switch (checkSymbol(systemString, 6)) {
-                    case 0:
-                        form->textBox15->BackColor = Color().Gray;
-                        break;
-                    case 1:
-                        form->textBox15->BackColor = Color().Green;
-                        break;
-                    case 2:
-                        form->textBox15->BackColor = Color().Yellow;
-                        break;
-                    }
+                    textBox = form->textBox15;
+                    break;
+
+                case 28:
+                    textBox = form->textBox28;
+                    break;
+                case 29:
+                    textBox = form->textBox27;
+                    break;
+                case 30:
+                    textBox = form->textBox26;
+                    break;
+                case 31:
+                    textBox = form->textBox25;
+                    break;
+                case 32:
+                    textBox = form->textBox24;
+                    break;
+                case 33:
+                    textBox = form->textBox23;
+                    break;
+                case 34:
+                    textBox = form->textBox22;
                     break;
             }
-            currentPos = (currentPos + 1) % 28;
+
+            textBox->Text = systemString;
+            switch (checkSymbol(systemString, currentPos % 7)) {
+                case 0:
+                    textBox->BackColor = Color().Gray;
+                    break;
+                case 1:
+                    textBox->BackColor = Color().Green;
+                    break;
+                case 2:
+                    textBox->BackColor = Color().Yellow;
+                    break;
+            }
+
+            currentPos = (currentPos + 1) % 35;
         }
     }
     return CallNextHookEx(NULL, nCode, wParam, lParam);
@@ -584,6 +381,8 @@ LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 void buttonClickEventHandler(Object^ sender, EventArgs^ e)
 {
     generateTrueWord();
+    UnhookWindowsHookEx(keyboardHook);
+    keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardHookProc, NULL, 0);
     wordle::wordle_form^ form = dynamic_cast<wordle::wordle_form^>(Application::OpenForms[0]);
     form->textStatus->Text = convertToSystemString(trueWord);
     clearTextBox(true);
@@ -598,7 +397,7 @@ int main(array<String^>^ args) {
     Application::EnableVisualStyles();
 
     // Установка глобального перехватчика клавиатуры
-    HHOOK keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardHookProc, NULL, 0);
+    keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardHookProc, NULL, 0);
 
     wordle::wordle_form^ form = gcnew wordle::wordle_form();
 

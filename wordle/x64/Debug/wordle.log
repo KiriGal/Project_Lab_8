@@ -1,5 +1,5 @@
 ﻿  wordle_form.cpp
-C:\Users\Кирилл\Desktop\App\wordle\wordle_form.cpp(64,72): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Кирилл\Desktop\App\wordle\wordle_form.cpp(159,25): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Кирилл\Desktop\App\wordle\wordle_form.cpp(67,72): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Кирилл\Desktop\App\wordle\wordle_form.cpp(207,25): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   wordle_form.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
   wordle.vcxproj -> C:\Users\Кирилл\Desktop\App\x64\Debug\wordle.exe

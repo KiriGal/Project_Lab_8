@@ -160,8 +160,8 @@ namespace wordle {
 			this->box6_forStr7->Location = System::Drawing::Point(464, 75);
 			this->box6_forStr7->Margin = System::Windows::Forms::Padding(8);
 			this->box6_forStr7->MaxLength = 1;
-			this->box6_forStr7->Multiline = true;
 			this->box6_forStr7->Name = L"box6_forStr7";
+			this->box6_forStr7->ReadOnly = true;
 			this->box6_forStr7->Size = System::Drawing::Size(73, 75);
 			this->box6_forStr7->TabIndex = 21;
 			this->box6_forStr7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -175,8 +175,8 @@ namespace wordle {
 			this->box5_forStr7->Location = System::Drawing::Point(374, 75);
 			this->box5_forStr7->Margin = System::Windows::Forms::Padding(8);
 			this->box5_forStr7->MaxLength = 1;
-			this->box5_forStr7->Multiline = true;
 			this->box5_forStr7->Name = L"box5_forStr7";
+			this->box5_forStr7->ReadOnly = true;
 			this->box5_forStr7->Size = System::Drawing::Size(73, 75);
 			this->box5_forStr7->TabIndex = 20;
 			this->box5_forStr7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -190,8 +190,8 @@ namespace wordle {
 			this->box4_forStr7->Location = System::Drawing::Point(284, 75);
 			this->box4_forStr7->Margin = System::Windows::Forms::Padding(8);
 			this->box4_forStr7->MaxLength = 1;
-			this->box4_forStr7->Multiline = true;
 			this->box4_forStr7->Name = L"box4_forStr7";
+			this->box4_forStr7->ReadOnly = true;
 			this->box4_forStr7->Size = System::Drawing::Size(73, 75);
 			this->box4_forStr7->TabIndex = 19;
 			this->box4_forStr7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -205,8 +205,8 @@ namespace wordle {
 			this->box3_forStr7->Location = System::Drawing::Point(194, 75);
 			this->box3_forStr7->Margin = System::Windows::Forms::Padding(8);
 			this->box3_forStr7->MaxLength = 1;
-			this->box3_forStr7->Multiline = true;
 			this->box3_forStr7->Name = L"box3_forStr7";
+			this->box3_forStr7->ReadOnly = true;
 			this->box3_forStr7->Size = System::Drawing::Size(73, 75);
 			this->box3_forStr7->TabIndex = 18;
 			this->box3_forStr7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -220,8 +220,8 @@ namespace wordle {
 			this->box2_forStr7->Location = System::Drawing::Point(104, 75);
 			this->box2_forStr7->Margin = System::Windows::Forms::Padding(8);
 			this->box2_forStr7->MaxLength = 1;
-			this->box2_forStr7->Multiline = true;
 			this->box2_forStr7->Name = L"box2_forStr7";
+			this->box2_forStr7->ReadOnly = true;
 			this->box2_forStr7->Size = System::Drawing::Size(73, 75);
 			this->box2_forStr7->TabIndex = 17;
 			this->box2_forStr7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -234,8 +234,8 @@ namespace wordle {
 			this->box1_forStr7->Location = System::Drawing::Point(14, 75);
 			this->box1_forStr7->Margin = System::Windows::Forms::Padding(8);
 			this->box1_forStr7->MaxLength = 1;
-			this->box1_forStr7->Multiline = true;
 			this->box1_forStr7->Name = L"box1_forStr7";
+			this->box1_forStr7->ReadOnly = true;
 			this->box1_forStr7->Size = System::Drawing::Size(73, 75);
 			this->box1_forStr7->TabIndex = 16;
 			this->box1_forStr7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -249,8 +249,8 @@ namespace wordle {
 			this->box7_forStr7->Location = System::Drawing::Point(554, 75);
 			this->box7_forStr7->Margin = System::Windows::Forms::Padding(8);
 			this->box7_forStr7->MaxLength = 1;
-			this->box7_forStr7->Multiline = true;
 			this->box7_forStr7->Name = L"box7_forStr7";
+			this->box7_forStr7->ReadOnly = true;
 			this->box7_forStr7->Size = System::Drawing::Size(73, 75);
 			this->box7_forStr7->TabIndex = 22;
 			this->box7_forStr7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -264,8 +264,8 @@ namespace wordle {
 			this->textBox1->Location = System::Drawing::Point(554, 168);
 			this->textBox1->Margin = System::Windows::Forms::Padding(8);
 			this->textBox1->MaxLength = 1;
-			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
+			this->textBox1->ReadOnly = true;
 			this->textBox1->Size = System::Drawing::Size(73, 75);
 			this->textBox1->TabIndex = 30;
 			this->textBox1->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -279,8 +279,8 @@ namespace wordle {
 			this->textBox2->Location = System::Drawing::Point(464, 168);
 			this->textBox2->Margin = System::Windows::Forms::Padding(8);
 			this->textBox2->MaxLength = 1;
-			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
+			this->textBox2->ReadOnly = true;
 			this->textBox2->Size = System::Drawing::Size(73, 75);
 			this->textBox2->TabIndex = 29;
 			this->textBox2->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -294,8 +294,8 @@ namespace wordle {
 			this->textBox3->Location = System::Drawing::Point(374, 168);
 			this->textBox3->Margin = System::Windows::Forms::Padding(8);
 			this->textBox3->MaxLength = 1;
-			this->textBox3->Multiline = true;
 			this->textBox3->Name = L"textBox3";
+			this->textBox3->ReadOnly = true;
 			this->textBox3->Size = System::Drawing::Size(73, 75);
 			this->textBox3->TabIndex = 28;
 			this->textBox3->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -309,8 +309,8 @@ namespace wordle {
 			this->textBox4->Location = System::Drawing::Point(284, 168);
 			this->textBox4->Margin = System::Windows::Forms::Padding(8);
 			this->textBox4->MaxLength = 1;
-			this->textBox4->Multiline = true;
 			this->textBox4->Name = L"textBox4";
+			this->textBox4->ReadOnly = true;
 			this->textBox4->Size = System::Drawing::Size(73, 75);
 			this->textBox4->TabIndex = 27;
 			this->textBox4->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -324,8 +324,8 @@ namespace wordle {
 			this->textBox5->Location = System::Drawing::Point(194, 168);
 			this->textBox5->Margin = System::Windows::Forms::Padding(8);
 			this->textBox5->MaxLength = 1;
-			this->textBox5->Multiline = true;
 			this->textBox5->Name = L"textBox5";
+			this->textBox5->ReadOnly = true;
 			this->textBox5->Size = System::Drawing::Size(73, 75);
 			this->textBox5->TabIndex = 26;
 			this->textBox5->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -339,8 +339,8 @@ namespace wordle {
 			this->textBox6->Location = System::Drawing::Point(104, 168);
 			this->textBox6->Margin = System::Windows::Forms::Padding(8);
 			this->textBox6->MaxLength = 1;
-			this->textBox6->Multiline = true;
 			this->textBox6->Name = L"textBox6";
+			this->textBox6->ReadOnly = true;
 			this->textBox6->Size = System::Drawing::Size(73, 75);
 			this->textBox6->TabIndex = 25;
 			this->textBox6->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -354,8 +354,8 @@ namespace wordle {
 			this->textBox7->Location = System::Drawing::Point(14, 168);
 			this->textBox7->Margin = System::Windows::Forms::Padding(8);
 			this->textBox7->MaxLength = 1;
-			this->textBox7->Multiline = true;
 			this->textBox7->Name = L"textBox7";
+			this->textBox7->ReadOnly = true;
 			this->textBox7->Size = System::Drawing::Size(73, 75);
 			this->textBox7->TabIndex = 24;
 			this->textBox7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -369,8 +369,8 @@ namespace wordle {
 			this->textBox8->Location = System::Drawing::Point(554, 257);
 			this->textBox8->Margin = System::Windows::Forms::Padding(8);
 			this->textBox8->MaxLength = 1;
-			this->textBox8->Multiline = true;
 			this->textBox8->Name = L"textBox8";
+			this->textBox8->ReadOnly = true;
 			this->textBox8->Size = System::Drawing::Size(73, 75);
 			this->textBox8->TabIndex = 37;
 			this->textBox8->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -384,8 +384,8 @@ namespace wordle {
 			this->textBox9->Location = System::Drawing::Point(464, 257);
 			this->textBox9->Margin = System::Windows::Forms::Padding(8);
 			this->textBox9->MaxLength = 1;
-			this->textBox9->Multiline = true;
 			this->textBox9->Name = L"textBox9";
+			this->textBox9->ReadOnly = true;
 			this->textBox9->Size = System::Drawing::Size(73, 75);
 			this->textBox9->TabIndex = 36;
 			this->textBox9->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -399,8 +399,8 @@ namespace wordle {
 			this->textBox10->Location = System::Drawing::Point(374, 257);
 			this->textBox10->Margin = System::Windows::Forms::Padding(8);
 			this->textBox10->MaxLength = 1;
-			this->textBox10->Multiline = true;
 			this->textBox10->Name = L"textBox10";
+			this->textBox10->ReadOnly = true;
 			this->textBox10->Size = System::Drawing::Size(73, 75);
 			this->textBox10->TabIndex = 35;
 			this->textBox10->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -414,8 +414,8 @@ namespace wordle {
 			this->textBox11->Location = System::Drawing::Point(284, 257);
 			this->textBox11->Margin = System::Windows::Forms::Padding(8);
 			this->textBox11->MaxLength = 1;
-			this->textBox11->Multiline = true;
 			this->textBox11->Name = L"textBox11";
+			this->textBox11->ReadOnly = true;
 			this->textBox11->Size = System::Drawing::Size(73, 75);
 			this->textBox11->TabIndex = 34;
 			this->textBox11->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -429,8 +429,8 @@ namespace wordle {
 			this->textBox12->Location = System::Drawing::Point(194, 257);
 			this->textBox12->Margin = System::Windows::Forms::Padding(8);
 			this->textBox12->MaxLength = 1;
-			this->textBox12->Multiline = true;
 			this->textBox12->Name = L"textBox12";
+			this->textBox12->ReadOnly = true;
 			this->textBox12->Size = System::Drawing::Size(73, 75);
 			this->textBox12->TabIndex = 33;
 			this->textBox12->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -444,8 +444,8 @@ namespace wordle {
 			this->textBox13->Location = System::Drawing::Point(104, 257);
 			this->textBox13->Margin = System::Windows::Forms::Padding(8);
 			this->textBox13->MaxLength = 1;
-			this->textBox13->Multiline = true;
 			this->textBox13->Name = L"textBox13";
+			this->textBox13->ReadOnly = true;
 			this->textBox13->Size = System::Drawing::Size(73, 75);
 			this->textBox13->TabIndex = 32;
 			this->textBox13->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -459,8 +459,8 @@ namespace wordle {
 			this->textBox14->Location = System::Drawing::Point(14, 257);
 			this->textBox14->Margin = System::Windows::Forms::Padding(8);
 			this->textBox14->MaxLength = 1;
-			this->textBox14->Multiline = true;
 			this->textBox14->Name = L"textBox14";
+			this->textBox14->ReadOnly = true;
 			this->textBox14->Size = System::Drawing::Size(73, 75);
 			this->textBox14->TabIndex = 31;
 			this->textBox14->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -474,8 +474,8 @@ namespace wordle {
 			this->textBox15->Location = System::Drawing::Point(554, 348);
 			this->textBox15->Margin = System::Windows::Forms::Padding(8);
 			this->textBox15->MaxLength = 1;
-			this->textBox15->Multiline = true;
 			this->textBox15->Name = L"textBox15";
+			this->textBox15->ReadOnly = true;
 			this->textBox15->Size = System::Drawing::Size(73, 75);
 			this->textBox15->TabIndex = 44;
 			this->textBox15->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -489,8 +489,8 @@ namespace wordle {
 			this->textBox16->Location = System::Drawing::Point(464, 348);
 			this->textBox16->Margin = System::Windows::Forms::Padding(8);
 			this->textBox16->MaxLength = 1;
-			this->textBox16->Multiline = true;
 			this->textBox16->Name = L"textBox16";
+			this->textBox16->ReadOnly = true;
 			this->textBox16->Size = System::Drawing::Size(73, 75);
 			this->textBox16->TabIndex = 43;
 			this->textBox16->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -504,8 +504,8 @@ namespace wordle {
 			this->textBox17->Location = System::Drawing::Point(374, 348);
 			this->textBox17->Margin = System::Windows::Forms::Padding(8);
 			this->textBox17->MaxLength = 1;
-			this->textBox17->Multiline = true;
 			this->textBox17->Name = L"textBox17";
+			this->textBox17->ReadOnly = true;
 			this->textBox17->Size = System::Drawing::Size(73, 75);
 			this->textBox17->TabIndex = 42;
 			this->textBox17->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -519,8 +519,8 @@ namespace wordle {
 			this->textBox18->Location = System::Drawing::Point(284, 348);
 			this->textBox18->Margin = System::Windows::Forms::Padding(8);
 			this->textBox18->MaxLength = 1;
-			this->textBox18->Multiline = true;
 			this->textBox18->Name = L"textBox18";
+			this->textBox18->ReadOnly = true;
 			this->textBox18->Size = System::Drawing::Size(73, 75);
 			this->textBox18->TabIndex = 41;
 			this->textBox18->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -534,8 +534,8 @@ namespace wordle {
 			this->textBox19->Location = System::Drawing::Point(194, 348);
 			this->textBox19->Margin = System::Windows::Forms::Padding(8);
 			this->textBox19->MaxLength = 1;
-			this->textBox19->Multiline = true;
 			this->textBox19->Name = L"textBox19";
+			this->textBox19->ReadOnly = true;
 			this->textBox19->Size = System::Drawing::Size(73, 75);
 			this->textBox19->TabIndex = 40;
 			this->textBox19->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -549,8 +549,8 @@ namespace wordle {
 			this->textBox20->Location = System::Drawing::Point(104, 348);
 			this->textBox20->Margin = System::Windows::Forms::Padding(8);
 			this->textBox20->MaxLength = 1;
-			this->textBox20->Multiline = true;
 			this->textBox20->Name = L"textBox20";
+			this->textBox20->ReadOnly = true;
 			this->textBox20->Size = System::Drawing::Size(73, 75);
 			this->textBox20->TabIndex = 39;
 			this->textBox20->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -564,8 +564,8 @@ namespace wordle {
 			this->textBox21->Location = System::Drawing::Point(14, 348);
 			this->textBox21->Margin = System::Windows::Forms::Padding(8);
 			this->textBox21->MaxLength = 1;
-			this->textBox21->Multiline = true;
 			this->textBox21->Name = L"textBox21";
+			this->textBox21->ReadOnly = true;
 			this->textBox21->Size = System::Drawing::Size(73, 75);
 			this->textBox21->TabIndex = 38;
 			this->textBox21->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -579,8 +579,8 @@ namespace wordle {
 			this->textBox22->Location = System::Drawing::Point(554, 438);
 			this->textBox22->Margin = System::Windows::Forms::Padding(8);
 			this->textBox22->MaxLength = 1;
-			this->textBox22->Multiline = true;
 			this->textBox22->Name = L"textBox22";
+			this->textBox22->ReadOnly = true;
 			this->textBox22->Size = System::Drawing::Size(73, 75);
 			this->textBox22->TabIndex = 51;
 			this->textBox22->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -593,8 +593,8 @@ namespace wordle {
 			this->textBox23->Location = System::Drawing::Point(464, 438);
 			this->textBox23->Margin = System::Windows::Forms::Padding(8);
 			this->textBox23->MaxLength = 1;
-			this->textBox23->Multiline = true;
 			this->textBox23->Name = L"textBox23";
+			this->textBox23->ReadOnly = true;
 			this->textBox23->Size = System::Drawing::Size(73, 75);
 			this->textBox23->TabIndex = 50;
 			this->textBox23->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -608,8 +608,8 @@ namespace wordle {
 			this->textBox24->Location = System::Drawing::Point(374, 438);
 			this->textBox24->Margin = System::Windows::Forms::Padding(8);
 			this->textBox24->MaxLength = 1;
-			this->textBox24->Multiline = true;
 			this->textBox24->Name = L"textBox24";
+			this->textBox24->ReadOnly = true;
 			this->textBox24->Size = System::Drawing::Size(73, 75);
 			this->textBox24->TabIndex = 49;
 			this->textBox24->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -623,8 +623,8 @@ namespace wordle {
 			this->textBox25->Location = System::Drawing::Point(284, 438);
 			this->textBox25->Margin = System::Windows::Forms::Padding(8);
 			this->textBox25->MaxLength = 1;
-			this->textBox25->Multiline = true;
 			this->textBox25->Name = L"textBox25";
+			this->textBox25->ReadOnly = true;
 			this->textBox25->Size = System::Drawing::Size(73, 75);
 			this->textBox25->TabIndex = 48;
 			this->textBox25->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -638,8 +638,8 @@ namespace wordle {
 			this->textBox26->Location = System::Drawing::Point(194, 438);
 			this->textBox26->Margin = System::Windows::Forms::Padding(8);
 			this->textBox26->MaxLength = 1;
-			this->textBox26->Multiline = true;
 			this->textBox26->Name = L"textBox26";
+			this->textBox26->ReadOnly = true;
 			this->textBox26->Size = System::Drawing::Size(73, 75);
 			this->textBox26->TabIndex = 47;
 			this->textBox26->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -653,8 +653,8 @@ namespace wordle {
 			this->textBox27->Location = System::Drawing::Point(104, 438);
 			this->textBox27->Margin = System::Windows::Forms::Padding(8);
 			this->textBox27->MaxLength = 1;
-			this->textBox27->Multiline = true;
 			this->textBox27->Name = L"textBox27";
+			this->textBox27->ReadOnly = true;
 			this->textBox27->Size = System::Drawing::Size(73, 75);
 			this->textBox27->TabIndex = 46;
 			this->textBox27->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -668,8 +668,8 @@ namespace wordle {
 			this->textBox28->Location = System::Drawing::Point(14, 438);
 			this->textBox28->Margin = System::Windows::Forms::Padding(8);
 			this->textBox28->MaxLength = 1;
-			this->textBox28->Multiline = true;
 			this->textBox28->Name = L"textBox28";
+			this->textBox28->ReadOnly = true;
 			this->textBox28->Size = System::Drawing::Size(73, 75);
 			this->textBox28->TabIndex = 45;
 			this->textBox28->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
